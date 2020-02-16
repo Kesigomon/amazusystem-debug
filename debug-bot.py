@@ -20,7 +20,7 @@ async def on_raw_reaction_remove(payload):
             message = await channel.fetch_message(payload.message_id)
             if message.pinned == 1:
                 reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
-                if reaction.count == True:
+                if reaction and reaction.count == 0:
                     return
                 else:
                     await message.unpin()
