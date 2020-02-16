@@ -21,8 +21,8 @@ async def on_raw_reaction_remove(payload):
             message = await channel.fetch_message(payload.message_id)
             if message.pinned == 1:
                 reaction = get(message.reactions, emoji=payload.emoji.name)
-                count = reaction.count
-                if int(count) == 0:
+                count = int(reaction.count)
+                if count == 0:
                     await message.unpin()
                     await message.channel.send(f"メッセージのピン留めを解除しました。")
                 else: await channel.send(f"バグ１")
