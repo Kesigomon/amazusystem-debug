@@ -1,6 +1,8 @@
 # はじまりのじゅもん
 import discord
+import os
 client = discord.Client()
+token = os.environ["TOKEN"]
 
 # 起動通知処理部
 @client.event
@@ -65,4 +67,4 @@ async def on_raw_reaction_remove(payload):
 # ======================================================
 
 # Botの起動とDiscordサーバーへの接続処理部
-client.run(TOKEN)
+client.run(token)
