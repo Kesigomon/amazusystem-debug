@@ -1,16 +1,16 @@
-# はじまりのじゅもん
 import discord
 import os
 client = discord.Client()
 token = os.environ["TOKEN"]
 
-# 起動通知処理部
+# 起動時の処理一覧
 @client.event
 async def on_ready():
+    # 待機
+    await client.wait_until_ready()
+    #　起動通知処理部
     channel = client.get_channel(678511640693440526)
     await channel.send("起動しました。")
-
-# ======================================================
 
 # メッセージ送信時の処理一覧
 @client.event
@@ -45,7 +45,7 @@ async def on_message(message):
 # リアクション追加時の処理一覧
 @client.event
 async def on_raw_reaction_add(payload):
-    #ピン留め処理部
+    # ピン留め処理部
     if payload.emoji.name == '📌':
         user = client.get_user(payload.user_id)
         if user.bot:
@@ -69,15 +69,14 @@ async def on_raw_reaction_remove(payload):
         message = await channel.fetch_message(payload.message_id)
         if not message.pinned:
             return
-        reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
+        reaction = discord.utils.get(
+            message.reactions, emoji=payload.emoji.name)
         if reaction:
             return
         await message.unpin()
         await channel.send("リアクションがゼロになったため、ピン留めが解除されました。")
-        embed = discord.Embed(title=f"送信者:{message.author}",description=f"メッセージ内容:{message.content}",color=0xff0000)
+        embed = discord.Embed(
+            title=f"送信者:{message.author}", description=f"メッセージ内容:{message.content}", color=0xff0000)
         await channel.send(embed=embed)
 
-# ======================================================
-
-# Botの起動とDiscordサーバーへの接続処理部
 client.run(token)
