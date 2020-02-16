@@ -24,7 +24,9 @@ async def on_raw_reaction_remove(payload):
                     return
                 else:
                     await message.unpin()
-                    await message.channel.send(f"メッセージのピン留めを解除しました。\n>>> {message.content}")
+                    await channel.send(f"{user.name}がメッセージのピン留めを解除しました。")
+                    embed = discord.Embed(title="送信者:{message.author}",description="{message.content}",color=0xff0000)
+                    await channel.send(embed=embed)
 
 # Botの起動とDiscordサーバーへの接続処理部
 client.run('Njc4NDQ0MDgwNTQ3NDk1OTgw.Xki4ZQ.GJJ1JVcj20rCT_3u4qnQQonRvSc')
