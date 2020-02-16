@@ -1,1 +1,1 @@
-debug-bot: python debug-bot.py
+bot: python debug-bot.py
