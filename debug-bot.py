@@ -20,12 +20,14 @@ async def on_raw_reaction_remove(payload):
             message = await channel.fetch_message(payload.message_id)
             if message.pinned == 1:
                 reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
-                if reaction and reaction.count == 1:
-                    return
+                # reaction単体だと比較できなかったためandでcountも追加
+                # 修正候補ここから
+                if reaction and reaction.count == 1: return
+                # ここまで
                 else:
                     await message.unpin()
-                    await channel.send(f"{user.name}がメッセージのピン留めを解除しました。")
-                    embed = discord.Embed(title=f"送信者:{message.author}",description=f"{message.content}",color=0xff0000)
+                    await channel.send("リアクションがゼロになったため、ピン留めが解除されました。")
+                    embed = discord.Embed(title=f"送信者:{message.author}",description=f"メッセージ内容:{message.content}",color=0xff0000)
                     await channel.send(embed=embed)
 
 # Botの起動とDiscordサーバーへの接続処理部
