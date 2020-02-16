@@ -9,7 +9,7 @@ token = os.environ["TOKEN"]
 async def on_ready():
     channel = client.get_channel(678507923311165443)
     await channel.send("起動しました。")
-
+    
 # ======================================================
 
 # メッセージ送信時の処理一覧
