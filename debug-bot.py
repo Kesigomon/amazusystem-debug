@@ -1,5 +1,6 @@
 # はじまりのじゅもん
 import discord
+import get_env
 client = discord.Client()
 
 # 起動通知処理部
@@ -65,4 +66,4 @@ async def on_raw_reaction_remove(payload):
 # ======================================================
 
 # Botの起動とDiscordサーバーへの接続処理部
-client.run('Njc4NDQ0MDgwNTQ3NDk1OTgw.Xki4ZQ.GJJ1JVcj20rCT_3u4qnQQonRvSc')
+client.run(get_env.KEY)
