@@ -1,1 +1,1 @@
-discordbot: python discordbot.py
+debug-bot: python debug-bot.py
