@@ -33,8 +33,7 @@ async def on_message(message):
         await message.add_reaction(hantai)
     # ピン留めのシステムメッセージ削除
     if message.is_system() == True:
-        if message.content.startswith("- system"):
-            await message.delete()
+        await message.delete()
 
 # リアクション追加時の処理一覧
 @client.event
