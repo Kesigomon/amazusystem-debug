@@ -1,2 +1,2 @@
-discordbot.py
 python-dotenv
+discordbot.py
