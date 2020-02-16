@@ -9,7 +9,7 @@ async def on_ready():
     # 待機
     await client.wait_until_ready()
     #　起動通知処理部
-    channel = client.get_channel(678511640693440526)
+    channel = client.get_channel(678507923311165443)
     await channel.send("起動しました。")
 
 # メッセージ送信時の処理一覧
