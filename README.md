@@ -1,2 +1,2 @@
 # amazusystem-debug
-this repo is to debug for amazusystem
+this is a repo to debug of amazusystem
