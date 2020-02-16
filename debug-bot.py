@@ -9,6 +9,7 @@ async def on_ready():
     await channel.send('起動しました。')
 
 # リアクション解除時の処理一覧
+from discord.utils import get
 @client.event
 async def on_raw_reaction_remove(payload):
     # ピン解除処理部
