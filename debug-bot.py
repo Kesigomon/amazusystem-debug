@@ -21,9 +21,10 @@ async def on_raw_reaction_remove(payload):
             if message.pinned == 1:
                 reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
                 if reaction and reaction.count == 1:
+                    return
+                else:
                     await message.unpin()
                     await message.channel.send(f"メッセージのピン留めを解除しました。")
-                else: await channel.send(f"バグ１")
 
 # Botの起動とDiscordサーバーへの接続処理部
 client.run('Njc4NDQ0MDgwNTQ3NDk1OTgw.Xki4ZQ.GJJ1JVcj20rCT_3u4qnQQonRvSc')
