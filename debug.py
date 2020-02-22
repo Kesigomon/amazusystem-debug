@@ -3,7 +3,7 @@ import os
 import asyncio
 client = discord.Client()
 token = os.environ["TOKEN"]
-loop = asyncio.get_running_loop()
+
 CH_STARTUP = 678507923311165443
 CH_REGISTER = 678511640693440526
 CH_JOIN = 678511642346258432
@@ -17,7 +17,7 @@ async def startup():
 @client.event
 async def on_ready():
     # do(startup)
-    loop.run_until_complete(startup())
+    asyncio.run(startup())
 
 @client.event
 async def on_message(message):
