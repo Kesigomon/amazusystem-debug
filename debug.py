@@ -10,10 +10,13 @@ CH_QUESTIONNAIRE = 678585920294748160
 EMOJI_SANSEI = "<:sansei:680682149657051136>"
 EMOJI_HANTAI = "<:hantai:680682184084029460>"
 
+async def startup():
+    await client.get_channel(CH_STARTUP).send("起動しました。")
+
 @client.event
 async def on_ready():
     # do(startup)
-    await client.get_channel(CH_STARTUP).send("起動しました。")
+    startup()
 
 @client.event
 async def on_message(message):
