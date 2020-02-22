@@ -43,8 +43,8 @@ async def on_message(message):
     if message.channel.id == CH_QUESTIONNAIRE:
         sansei = '<:sansei:660392552528347157>'
         hantai = '<:hantai:660392595159121959>'
-        await message.add_reaction(sansei)
-        await message.add_reaction(hantai)
+        await message.add_reaction("⭕️")
+        await message.add_reaction("❌")
 
 # リアクション追加時の処理一覧
 @client.event
