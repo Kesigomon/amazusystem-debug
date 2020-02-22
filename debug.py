@@ -18,8 +18,10 @@ async def on_ready():
 # メッセージ送信時の処理一覧
 @client.event
 async def on_message(message):
+    # BOTからのメッセージを無理
     if message.author.bot:
         return
+
     # アカウント登録処理部
     if message.content == "!register":
         if not message.channel.id == CH_REGISTER:
@@ -27,9 +29,8 @@ async def on_message(message):
             return
         role = discord.utils.get(message.guild.roles, name="member")
         await message.author.add_roles(role)
-        join = client.get_channel(678585920294748160)
         user_count = sum(1 for member in join.members if not member.bot)
-        await join.send(f"{message.author.name}が参加しました。\n現在の参加者数は{user_count}人です。")
+        await client.get_channel(CH_JOIN).send(f"{message.author.name}が参加しました。\n現在の参加者数は{user_count}人です。")
         dm = await message.author.create_dm()
         await dm.send((f"{message.author.mention} アカウントが登録されました。\n"
                         "まず何をすればいいかわからない方へ▽\n"
@@ -39,7 +40,7 @@ async def on_message(message):
                         "そして #welcome の上位互換の <#661167351412162580> が閲覧できるようになりました。"))
 
     # サーバーアンケート処理部
-    if message.channel.id == 660392800399130633:
+    if message.channel.id == CH_QUESTIONNAIRE:
         sansei = '<:sansei:660392552528347157>'
         hantai = '<:hantai:660392595159121959>'
         await message.add_reaction(sansei)
@@ -48,6 +49,10 @@ async def on_message(message):
 # リアクション追加時の処理一覧
 @client.event
 async def on_raw_reaction_add(payload):
+    if client.get_user(payload.user_id).bot:
+        channel = client.get_channel(payload.channel_id)
+        channel.send("BOTのリアクションです。")
+        return
     # ピン留め処理部
     if payload.emoji.name == '📌':
         user = client.get_user(payload.user_id)
