@@ -10,6 +10,7 @@ CH_JOIN = 678511642346258432
 CH_QUESTIONNAIRE = 678585920294748160
 EMOJI_SANSEI = "⭕️"
 EMOJI_HANTAI = "❌"
+
 # 起動時の処理一覧
 @client.event
 async def on_ready():
@@ -42,6 +43,8 @@ async def on_message(message):
 
     # サーバーアンケート処理部
     if message.channel.id == CH_QUESTIONNAIRE:
+        EMOJI_SANSEI = "⭕️"
+        EMOJI_HANTAI = "❌"
         await message.add_reaction(EMOJI_SANSEI)
         await message.add_reaction(EMOJI_HANTAI)
 
