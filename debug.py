@@ -17,7 +17,8 @@ async def startup():
 @client.event
 async def on_ready():
     # do(startup)
-    asyncio.run(startup())
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(startup())
 
 @client.event
 async def on_message(message):
