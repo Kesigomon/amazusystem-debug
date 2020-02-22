@@ -15,7 +15,7 @@ EMOJI_HANTAI = "<:hantai:680682184084029460>"
 # 各処理の関数化
 def register_func():
     if not message.channel.id == CH_REGISTER:
-        await message.channel.send("ここでは実行できません。")
+        message.channel.send("ここでは実行できません。")
         return
     role = discord.utils.get(message.guild.roles, name="member")
     await message.author.add_roles(role)
