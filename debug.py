@@ -12,13 +12,7 @@ EMOJI_SANSEI = "<:sansei:680682149657051136>"
 EMOJI_HANTAI = "<:hantai:680682184084029460>"
 
 def do(What):
-    try:
-        loop = asyncio.get_running_loop()
-    except:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-    finally:
-        pass
+    loop = asyncio.get_running_loop()
     loop.run_until_complete(What())
 
 async def startup():
