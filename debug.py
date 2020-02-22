@@ -3,16 +3,17 @@ import os
 client = discord.Client()
 token = os.environ["TOKEN"]
 
+# 各チャンネルIDを代入
+startup_ch = client.get_channel(678507923311165443)
+register_ch = client.get_channel(678511640693440526)
+join_notify_ch = client.get_channel(678511642346258432)
+questionnaire_ch = client.get_channel(678585920294748160)
 # 起動時の処理一覧
 @client.event
 async def on_ready():
     # 待機
     await client.wait_until_ready()
-    # 各チャンネルIDを代入
-    startup_ch = client.get_channel(678507923311165443)
-    register_ch = client.get_channel(678511640693440526)
-    join_notify_ch = client.get_channel(678511642346258432)
-    questionnaire_ch = client.get_channel(678585920294748160)
+
     # 起動通知処理部
     await startup_ch.send("起動しました。")
 
