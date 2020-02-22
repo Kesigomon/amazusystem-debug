@@ -12,12 +12,7 @@ EMOJI_SANSEI = "<:sansei:680682149657051136>"
 EMOJI_HANTAI = "<:hantai:680682184084029460>"
 
 def do(What):
-    try:
-        loop = asyncio.get_event_loop()
-    except:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-    loop.run_until_complete(What())
+    asyncio.run(What())
 
 async def startup():
     await client.get_channel(CH_STARTUP).send("起動しました。")
