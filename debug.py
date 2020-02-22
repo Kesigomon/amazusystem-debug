@@ -49,7 +49,8 @@ async def on_message(message):
 # リアクション追加時の処理一覧
 @client.event
 async def on_raw_reaction_add(payload):
-    if client.get_user(payload.user_id).bot:
+    user = client.get_user(payload.user_id)
+    if user.bot:
         channel = client.get_channel(payload.channel_id)
         channel.send("BOTのリアクションです。")
         return
