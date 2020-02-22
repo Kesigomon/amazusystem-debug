@@ -13,7 +13,7 @@ EMOJI_SANSEI = "<:sansei:680682149657051136>"
 EMOJI_HANTAI = "<:hantai:680682184084029460>"
 
 # 各処理の関数化
-def register_func():
+def register_func(message):
     if not message.channel.id == CH_REGISTER:
         message.channel.send("ここでは実行できません。")
         return
