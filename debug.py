@@ -11,15 +11,14 @@ CH_QUESTIONNAIRE = 678585920294748160
 EMOJI_SANSEI = "<:sansei:680682149657051136>"
 EMOJI_HANTAI = "<:hantai:680682184084029460>"
 
-def do():
+def do(What):
     loop = asyncio.get_running_loop()
-    loop.run_until_complete()
+    loop.run_until_complete(What())
 
 async def startup():
-    do()
     await client.get_channel(CH_STARTUP).send("起動しました。")
 
-async def register(message):
+async def register():
     if not message.channel.id == CH_REGISTER:
         await message.channel.send("ここでは実行できません。")
         return
@@ -35,11 +34,11 @@ async def register(message):
                     "【Tips】スパム防止のため #welcome と #register は非表示になりました。\n"
                     "そして #welcome の上位互換の <#661167351412162580> が閲覧できるようになりました。"))
 
-async def questionnaire(message):
+async def questionnaire():
     await message.add_reaction(EMOJI_SANSEI)
     await message.add_reaction(EMOJI_HANTAI)
 
-async def pin(payload):
+async def pin():
     channel = client.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
     if message.pinned:
@@ -47,7 +46,7 @@ async def pin(payload):
     await message.pin()
     await channel.send(f"{user.name}がピン留めしました。")
 
-async def unpin(payload):
+async def unpin():
     channel = client.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
     if not message.pinned:
@@ -63,16 +62,16 @@ async def unpin(payload):
 
 @client.event
 async def on_ready():
-    await startup()
+    do(startup)
 
 @client.event
 async def on_message(message):
     if message.author.bot:
         return
     if message.content == "!register":
-        register(message)
+        do(register)
     if message.channel.id == CH_QUESTIONNAIRE:
-        questionnaire(message)
+        do(questionnaire)
 
 @client.event
 async def on_raw_reaction_add(payload):
