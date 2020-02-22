@@ -3,12 +3,13 @@ import os
 client = discord.Client()
 token = os.environ["TOKEN"]
 
-# 各チャンネルIDを代入
+# 各IDを代入
 CH_STARTUP = 678507923311165443
 CH_REGISTER = 678511640693440526
 CH_JOIN = 678511642346258432
 CH_QUESTIONNAIRE = 678585920294748160
-
+EMOJI_SANSEI = "⭕️"
+EMOJI_HANTAI = "❌"
 # 起動時の処理一覧
 @client.event
 async def on_ready():
@@ -41,10 +42,8 @@ async def on_message(message):
 
     # サーバーアンケート処理部
     if message.channel.id == CH_QUESTIONNAIRE:
-        sansei = '<:sansei:660392552528347157>'
-        hantai = '<:hantai:660392595159121959>'
-        await message.add_reaction("⭕️")
-        await message.add_reaction("❌")
+        await message.add_reaction(EMOJI_SANSEI)
+        await message.add_reaction(EMOJI_HANTAI)
 
 # リアクション追加時の処理一覧
 @client.event
