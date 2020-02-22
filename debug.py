@@ -3,18 +3,17 @@ import os
 client = discord.Client()
 token = os.environ["TOKEN"]
 
-#　各チャンネルIDを代入
-startup_ch = 678507923311165443
-register_ch = 678511640693440526
-join_notify_ch = 678511642346258432
-questionnaire_ch = 678585920294748160
-
 # 起動時の処理一覧
 @client.event
 async def on_ready():
     # 待機
     await client.wait_until_ready()
-    #　起動通知処理部
+    # 各チャンネルIDを代入
+    startup_ch = client.get_channel(678507923311165443)
+    register_ch = client.get_channel(678511640693440526)
+    join_notify_ch = client.get_channel(678511642346258432)
+    questionnaire_ch = client.get_channel(678585920294748160)
+    # 起動通知処理部
     await startup_ch.send("起動しました。")
 
 # メッセージ送信時の処理一覧
@@ -24,7 +23,7 @@ async def on_message(message):
         return
     # アカウント登録処理部
     if message.content == "!register":
-        if not message.channel.id == 678511642346258432:
+        if not message.channel == register_ch:
             await message.channel.send("ここでは実行できません。")
             return
         role = discord.utils.get(message.guild.roles, name="member")
