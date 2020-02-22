@@ -52,7 +52,7 @@ async def on_raw_reaction_add(payload):
     user = client.get_user(payload.user_id)
     if user.bot:
         channel = client.get_channel(payload.channel_id)
-        channel.send("BOTのリアクションです。")
+        await channel.send("BOTのリアクションです。")
         return
     # ピン留め処理部
     if payload.emoji.name == '📌':
