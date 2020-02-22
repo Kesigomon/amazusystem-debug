@@ -18,7 +18,7 @@ def do(What):
 async def startup():
     await client.get_channel(CH_STARTUP).send("起動しました。")
 
-async def register():
+async def register(message):
     if not message.channel.id == CH_REGISTER:
         await message.channel.send("ここでは実行できません。")
         return
@@ -34,11 +34,11 @@ async def register():
                     "【Tips】スパム防止のため #welcome と #register は非表示になりました。\n"
                     "そして #welcome の上位互換の <#661167351412162580> が閲覧できるようになりました。"))
 
-async def questionnaire():
+async def questionnaire(message):
     await message.add_reaction(EMOJI_SANSEI)
     await message.add_reaction(EMOJI_HANTAI)
 
-async def pin():
+async def pin(payload):
     channel = client.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
     if message.pinned:
@@ -46,7 +46,7 @@ async def pin():
     await message.pin()
     await channel.send(f"{user.name}がピン留めしました。")
 
-async def unpin():
+async def unpin(payload):
     channel = client.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
     if not message.pinned:
