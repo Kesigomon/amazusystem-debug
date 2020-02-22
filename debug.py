@@ -11,11 +11,12 @@ CH_QUESTIONNAIRE = 678585920294748160
 EMOJI_SANSEI = "<:sansei:680682149657051136>"
 EMOJI_HANTAI = "<:hantai:680682184084029460>"
 
-def do(What):
+def do():
     loop = asyncio.get_running_loop()
-    loop.run_until_complete(What())
+    loop.run_until_complete()
 
 async def startup():
+    do()
     await client.get_channel(CH_STARTUP).send("起動しました。")
 
 async def register(message):
@@ -62,7 +63,7 @@ async def unpin(payload):
 
 @client.event
 async def on_ready():
-    do(startup)
+    startup()
 
 @client.event
 async def on_message(message):
