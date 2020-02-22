@@ -3,14 +3,19 @@ import os
 client = discord.Client()
 token = os.environ["TOKEN"]
 
+#　各チャンネルIDを代入
+startup_ch = 678507923311165443
+register_ch = 678511640693440526
+join_notify_ch = 678511642346258432
+questionnaire_ch = 678585920294748160
+
 # 起動時の処理一覧
 @client.event
 async def on_ready():
     # 待機
     await client.wait_until_ready()
     #　起動通知処理部
-    channel = client.get_channel(678507923311165443)
-    await channel.send("起動しました。")
+    await startup_ch.send("起動しました。")
 
 # メッセージ送信時の処理一覧
 @client.event
