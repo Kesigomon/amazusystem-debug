@@ -8,8 +8,8 @@ CH_STARTUP = 678507923311165443
 CH_REGISTER = 678511640693440526
 CH_JOIN = 678511642346258432
 CH_QUESTIONNAIRE = 678585920294748160
-EMOJI_SANSEI = discord.utils.get(guild.emojis, name='o')
-EMOJI_HANTAI = discord.utils.get(guild.emojis, name='x')
+EMOJI_SANSEI = discord.utils.get(client.emojis, name='o')
+EMOJI_HANTAI = discord.utils.get(client.emojis, name='x')
 
 # 起動時の処理一覧
 @client.event
