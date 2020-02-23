@@ -31,23 +31,23 @@ async def register(message):
                    "そして #welcome の上位互換の <#661167351412162580> が閲覧できるようになりました。"))
 
 
-async def get_from_payload(payload):
-    #  いい名前思いつかなかったのでいい名前思いつたら名前変えてもヨシ
+async def get_payload(payload):
     user = client.get_user(payload.user_id)
     channel = client.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
     return user, channel, message
 
+
 async def pin(payload):
-    user, channel, message = await get_from_payload(payload)
+    user, channel, message = await get_payload(payload)
     if message.pinned:
         return
     await message.pin()
     await channel.send(f"{user.name}がピン留めしました。")
 
-    
+
 async def unpin(payload):
-    user, channel, message = await get_from_payload(payload)
+    user, channel, message = await get_payload(payload)
     if not message.pinned:
         return
     reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
@@ -82,7 +82,7 @@ async def on_raw_reaction_add(payload):
     if user.bot:
         return
     if payload.emoji.name == "\N{PUSHPIN}":
-        await pin(payload, user)
+        await pin(payload)
 
 
 @client.event
@@ -91,6 +91,6 @@ async def on_raw_reaction_remove(payload):
     if user.bot:
         return
     if payload.emoji.name == "\N{PUSHPIN}":
-        await unpin(payload, user)
+        await unpin(payload)
 
 client.run(TOKEN)
