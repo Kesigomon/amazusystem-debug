@@ -12,8 +12,6 @@ EMOJI_SANSEI = "<:sansei:680682149657051136>"
 EMOJI_HANTAI = "<:hantai:680682184084029460>"
 
 # 関数一覧
-async def startup():
-    await client.get_channel(CH_STARTUP).send("起動しました。")
 
 async def register(message):
     if not message.channel.id == CH_REGISTER:
@@ -61,7 +59,7 @@ async def unpin(payload):
 # イベント一覧
 @client.event
 async def on_ready():
-    await startup()
+    await client.get_channel(CH_STARTUP).send("起動しました。")
 
 @client.event
 async def on_message(message):
