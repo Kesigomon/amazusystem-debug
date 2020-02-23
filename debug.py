@@ -11,6 +11,7 @@ CH_QUESTIONNAIRE = 678585920294748160
 EMOJI_SANSEI = "<:sansei:680682149657051136>"
 EMOJI_HANTAI = "<:hantai:680682184084029460>"
 
+
 # functions
 async def register(message):
     if not message.channel.id == CH_REGISTER:
@@ -29,26 +30,24 @@ async def register(message):
                    "【Tips】スパム防止のため #welcome と #register は非表示になりました。\n"
                    "そして #welcome の上位互換の <#661167351412162580> が閲覧できるようになりました。"))
 
-async def questionnaire(message):
-    await message.add_reaction(EMOJI_SANSEI)
-    await message.add_reaction(EMOJI_HANTAI)
 
-async def get_from_payload(payload):
-    #  いい名前思いつかなかったのでいい名前思いつたら名前変えてもヨシ
+async def get_payload(payload):
     user = client.get_user(payload.user_id)
     channel = client.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
     return user, channel, message
 
+
 async def pin(payload):
-    user, channel, message = await get_from_payload(payload)
+    user, channel, message = await get_payload(payload)
     if message.pinned:
         return
     await message.pin()
     await channel.send(f"{user.name}がピン留めしました。")
 
+
 async def unpin(payload):
-    user, channel, message = await get_from_payload(payload)
+    user, channel, message = await get_payload(payload)
     if not message.pinned:
         return
     reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
@@ -84,6 +83,7 @@ async def on_raw_reaction_add(payload):
         return
     if payload.emoji.name == "\N{PUSHPIN}":
         await pin(payload)
+
 
 @client.event
 async def on_raw_reaction_remove(payload):
