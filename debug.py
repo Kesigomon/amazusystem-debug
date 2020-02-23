@@ -36,15 +36,17 @@ async def questionnaire(message):
     await message.add_reaction(EMOJI_SANSEI)
     await message.add_reaction(EMOJI_HANTAI)
 
-async def pin(payload, user):
+async def pin(payload):
+    user = client.get_user(payload.user_id)
     channel = client.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
     if message.pinned:
         return
     await message.pin()
-    await channel.send(f"{user.nick}がピン留めしました。")
+    await channel.send(f"{user.name}がピン留めしました。")
 
-async def unpin(payload, user):
+async def unpin(payload):
+    user = client.get_user(payload.user_id)
     channel = client.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
     if not message.pinned:
@@ -54,7 +56,7 @@ async def unpin(payload, user):
         return
     await message.unpin()
     await channel.send("リアクションがゼロになったため、ピン留めが解除されました。")
-    embed = discord.Embed(title=f"送信者:{message.author.nick}", description=f"メッセージ内容:{message.content}", color=0xff0000)
+    embed = discord.Embed(title=f"送信者:{message.author}", description=f"メッセージ内容:{message.content}", color=0xff0000)
     await channel.send(embed=embed)
 
 # イベント一覧
@@ -77,7 +79,7 @@ async def on_raw_reaction_add(payload):
     if user.bot:
         return
     if payload.emoji.name == "\N{PUSHPIN}":
-        await pin(payload, user)
+        await pin(payload)
 
 @client.event
 async def on_raw_reaction_remove(payload):
@@ -85,6 +87,6 @@ async def on_raw_reaction_remove(payload):
     if user.bot:
         return
     if payload.emoji.name == "\N{PUSHPIN}":
-        await unpin(payload, user)
+        await unpin(payload)
 
 client.run(TOKEN)
