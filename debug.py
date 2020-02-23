@@ -4,6 +4,7 @@ import asyncio
 client = discord.Client()
 TOKEN = os.environ["DISCORD_BOT_TOKEN"]
 
+# 定数一覧
 CH_STARTUP = 678507923311165443
 CH_REGISTER = 678511640693440526
 CH_JOIN = 678511642346258432
@@ -11,6 +12,7 @@ CH_QUESTIONNAIRE = 678585920294748160
 EMOJI_SANSEI = "<:sansei:680682149657051136>"
 EMOJI_HANTAI = "<:hantai:680682184084029460>"
 
+# 関数一覧
 async def startup():
     await client.get_channel(CH_STARTUP).send("起動しました。")
 
@@ -55,33 +57,38 @@ async def unpin(payload):
     embed = discord.Embed(title=f"送信者:{message.author}", description=f"メッセージ内容:{message.content}", color=0xff0000)
     await channel.send(embed=embed)
 
+async def exclude_bot_from_message(message):
+    if message.author.bot:
+        return
+
+async def exclude_bot_from_reaction(payload):
+    user = client.get_user(payload.user_id)
+    if user.bot:
+        return
+
+# イベント一覧
 @client.event
 async def on_ready():
     await startup()
 
 @client.event
 async def on_message(message):
-    if message.author.bot:
-        return
+    await exclude_bot_from_message(message)
     if message.content == "!register":
-        await register()
+        await register(message)
     if message.channel.id == CH_QUESTIONNAIRE:
         await questionnaire(message)
 
 @client.event
 async def on_raw_reaction_add(payload):
-    user = client.get_user(payload.user_id)
-    if user.bot:
-        return
+    await exclude_bot_from_reaction(payload)
     if payload.emoji.name == "\N{PUSHPIN}":
-        await pin()
+        await pin(payload)
 
 @client.event
 async def on_raw_reaction_remove(payload):
-    user = client.get_user(payload.user_id)
-    if user.bot:
-        return
+    await exclude_bot_from_reaction(payload)
     if payload.emoji.name == "\N{PUSHPIN}":
-        await unpin()
+        await unpin(payload)
 
 client.run(TOKEN)
