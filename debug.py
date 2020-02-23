@@ -64,9 +64,9 @@ async def on_message(message):
     if message.author.bot:
         return
     if message.content == "!register":
-        do(register)
+        await register()
     if message.channel.id == CH_QUESTIONNAIRE:
-        do(questionnaire)
+        await questionnaire()
 
 @client.event
 async def on_raw_reaction_add(payload):
@@ -74,7 +74,7 @@ async def on_raw_reaction_add(payload):
     if user.bot:
         return
     if payload.emoji.name == "\N{PUSHPIN}":
-        do(pin)
+        await pin()
 
 @client.event
 async def on_raw_reaction_remove(payload):
@@ -82,6 +82,6 @@ async def on_raw_reaction_remove(payload):
     if user.bot:
         return
     if payload.emoji.name == "\N{PUSHPIN}":
-        do(unpin)
+        await unpin()
 
 client.run(TOKEN)
