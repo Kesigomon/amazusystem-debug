@@ -3,7 +3,7 @@ import os
 client = discord.Client()
 TOKEN = os.environ["DISCORD_BOT_TOKEN"]
 
-# 定数一覧
+# consts
 CH_STARTUP = 678507923311165443
 CH_REGISTER = 678511640693440526
 CH_JOIN = 678511642346258432
@@ -11,7 +11,7 @@ CH_QUESTIONNAIRE = 678585920294748160
 EMOJI_SANSEI = "<:sansei:680682149657051136>"
 EMOJI_HANTAI = "<:hantai:680682184084029460>"
 
-# 関数一覧
+# functions
 async def register(message):
     if not message.channel.id == CH_REGISTER:
         await message.channel.send("ここでは実行できません。")
@@ -49,10 +49,10 @@ async def unpin(payload, user):
     embed = discord.Embed(title=f"送信者:{message.author}", description=f"メッセージ内容:{message.content}", color=0xff0000)
     await channel.send(embed=embed)
 
-# イベント一覧
+# events
 @client.event
 async def on_ready():
-    await client.get_channel(CH_STARTUP).send("起動しました。")
+    await client.get_channel(CH_STARTUP).send("start up succeed. ")
 
 @client.event
 async def on_message(message):
