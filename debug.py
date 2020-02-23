@@ -57,15 +57,6 @@ async def unpin(payload):
     embed = discord.Embed(title=f"送信者:{message.author}", description=f"メッセージ内容:{message.content}", color=0xff0000)
     await channel.send(embed=embed)
 
-async def exclude_bot_from_message(message):
-    if message.author.bot:
-        return
-
-async def exclude_bot_from_reaction(payload):
-    user = client.get_user(payload.user_id)
-    if user.bot:
-        return
-
 # イベント一覧
 @client.event
 async def on_ready():
@@ -73,7 +64,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    await exclude_bot_from_message(message)
+    if message.author.bot:
+        return
     if message.content == "!register":
         await register(message)
     if message.channel.id == CH_QUESTIONNAIRE:
@@ -81,13 +73,17 @@ async def on_message(message):
 
 @client.event
 async def on_raw_reaction_add(payload):
-    await exclude_bot_from_reaction(payload)
+    user = client.get_user(payload.user_id)
+    if user.bot:
+        return
     if payload.emoji.name == "\N{PUSHPIN}":
         await pin(payload)
 
 @client.event
 async def on_raw_reaction_remove(payload):
-    await exclude_bot_from_reaction(payload)
+    user = client.get_user(payload.user_id)
+    if user.bot:
+        return
     if payload.emoji.name == "\N{PUSHPIN}":
         await unpin(payload)
 
