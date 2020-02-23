@@ -42,7 +42,7 @@ async def pin(payload, user):
     if message.pinned:
         return
     await message.pin()
-    await channel.send(f"{user.name}がピン留めしました。")
+    await channel.send(f"{user.nick}がピン留めしました。")
 
 async def unpin(payload, user):
     channel = client.get_channel(payload.channel_id)
@@ -54,7 +54,7 @@ async def unpin(payload, user):
         return
     await message.unpin()
     await channel.send("リアクションがゼロになったため、ピン留めが解除されました。")
-    embed = discord.Embed(title=f"送信者:{message.author}", description=f"メッセージ内容:{message.content}", color=0xff0000)
+    embed = discord.Embed(title=f"送信者:{message.author.nick}", description=f"メッセージ内容:{message.content}", color=0xff0000)
     await channel.send(embed=embed)
 
 # イベント一覧
